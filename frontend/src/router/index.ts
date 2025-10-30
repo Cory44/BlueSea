@@ -4,6 +4,7 @@ import LoginPage from '@/pages/LoginPage.vue';
 import RegisterPage from '@/pages/RegisterPage.vue';
 import FeedPage from '@/pages/FeedPage.vue';
 import PostDetailPage from '@/pages/PostDetailPage.vue';
+import NewPostPage from '@/pages/NewPostPage.vue';
 import { pinia } from '@/stores';
 import { useAuthStore } from '@/stores/auth';
 
@@ -31,6 +32,12 @@ const router = createRouter({
       path: '/feed',
       name: 'feed',
       component: FeedPage,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/posts/new',
+      name: 'new-post',
+      component: NewPostPage,
       meta: { requiresAuth: true }
     },
     {

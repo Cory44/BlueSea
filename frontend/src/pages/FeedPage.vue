@@ -40,6 +40,8 @@ import FeedList from '@/components/FeedList.vue';
 import SourceFilter from '@/components/SourceFilter.vue';
 import type { PostSummary } from '@/components/PostCard.vue';
 import api from '@/services/api';
+import { storeToRefs } from 'pinia';
+import { useFeedStore } from '@/stores/feed';
 
 interface FeedResponse {
   items: PostSummary[];
@@ -54,6 +56,8 @@ const error = ref('');
 const nextOffset = ref<number | null>(null);
 const selectedSource = ref<string | null>(null);
 const showLoadMore = computed(() => nextOffset.value !== null && posts.value.length > 0);
+const feedStore = useFeedStore();
+const { refreshToken } = storeToRefs(feedStore);
 
 const fetchPosts = async (reset = false) => {
   if (loading.value) {
@@ -109,6 +113,10 @@ onMounted(() => {
 });
 
 watch(selectedSource, () => {
+  fetchPosts(true);
+});
+
+watch(refreshToken, () => {
   fetchPosts(true);
 });
 

@@ -61,13 +61,17 @@ def _serialize_post(post: Post) -> dict:
     upload_folder = current_app.config.get("UPLOAD_FOLDER")
     image_url: Optional[str] = None
     if post.image_path:
-        filename = post.image_path.replace("\\", "/")
-        if upload_folder and os.path.isabs(post.image_path):
-            try:
-                filename = os.path.relpath(post.image_path, upload_folder)
-            except ValueError:
-                filename = os.path.basename(post.image_path)
-        image_url = url_for("serve_upload", filename=filename, _external=False)
+        normalized_path = post.image_path.replace("\\", "/")
+        if normalized_path.lower().startswith(("http://", "https://")):
+            image_url = normalized_path
+        else:
+            filename = normalized_path
+            if upload_folder and os.path.isabs(post.image_path):
+                try:
+                    filename = os.path.relpath(post.image_path, upload_folder)
+                except ValueError:
+                    filename = os.path.basename(post.image_path)
+            image_url = url_for("serve_upload", filename=filename, _external=False)
 
     author = None
     if post.author:

@@ -8,7 +8,7 @@
       optionValue="value"
       placeholder="All sources"
       showClear
-      class="w-full sm:w-64"
+      class="w-full sm:w-64 !bg-white !text-slate-900"
       @update:modelValue="onUpdate"
     />
   </div>

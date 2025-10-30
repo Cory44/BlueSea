@@ -16,7 +16,7 @@
           type="text"
           autocomplete="username"
           placeholder="you@example.com"
-          class="w-full"
+          class="w-full !bg-white !text-slate-900"
           :class="{ 'p-invalid': formErrors.username }"
         />
         <InlineMessage v-if="formErrors.username" severity="error">{{ formErrors.username }}</InlineMessage>
@@ -32,7 +32,7 @@
           autocomplete="new-password"
           placeholder="Create a password"
           class="w-full"
-          :input-class="['w-full', { 'p-invalid': formErrors.password }]"
+          :input-class="['w-full !bg-white !text-slate-900', { 'p-invalid': formErrors.password }]"
         />
         <InlineMessage v-if="formErrors.password" severity="error">{{ formErrors.password }}</InlineMessage>
       </div>
@@ -47,7 +47,7 @@
           autocomplete="new-password"
           placeholder="Re-enter your password"
           class="w-full"
-          :input-class="['w-full', { 'p-invalid': formErrors.confirmPassword }]"
+          :input-class="['w-full !bg-white !text-slate-900', { 'p-invalid': formErrors.confirmPassword }]"
         />
         <InlineMessage v-if="formErrors.confirmPassword" severity="error">{{ formErrors.confirmPassword }}</InlineMessage>
       </div>

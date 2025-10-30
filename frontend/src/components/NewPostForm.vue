@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card class="!bg-white !text-slate-900">
     <template #title>
       Share something new
     </template>
@@ -45,6 +45,7 @@
             v-model="caption"
             placeholder="Give your post a catchy caption"
             :disabled="submitting"
+            class="!bg-white !text-slate-900"
           />
         </div>
 
@@ -59,6 +60,7 @@
             placeholder="Tell the story behind this image"
             auto-resize
             :disabled="submitting"
+            class="!bg-white !text-slate-900"
           />
         </div>
 
@@ -72,6 +74,11 @@
             separator="," 
             :disabled="submitting"
             placeholder="Add tags and press enter"
+            class="!bg-white !text-slate-900"
+            :pt="{ 
+              input: { class: '!bg-white !text-slate-900' },
+              container: { class: '!bg-white !text-slate-900' }
+            }"
           />
           <p class="text-xs text-slate-500">Use tags to help others discover your post.</p>
         </div>

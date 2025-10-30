@@ -71,7 +71,7 @@ def _serialize_post(post: Post) -> dict:
                     filename = os.path.relpath(post.image_path, upload_folder)
                 except ValueError:
                     filename = os.path.basename(post.image_path)
-            image_url = url_for("serve_upload", filename=filename, _external=False)
+            image_url = url_for("serve_upload", filename=filename, _external=True)
 
     author = None
     if post.author:

@@ -6,14 +6,52 @@
         <img class="hidden h-16 w-auto dark:block" src="/assets/logo-title-light.png" alt="BlueSea logo" />
       </RouterLink>
       <div class="flex items-center gap-3">
-        <Button class="hidden sm:inline-flex" label="Sign in" severity="secondary" text />
-        <Button label="Register" severity="primary" />
+        <div v-if="isAuthenticated" class="hidden items-center gap-3 sm:flex">
+          <Button label="Feed" severity="secondary" text @click="goToFeed" />
+          <span class="text-sm text-slate-500 dark:text-slate-300">@{{ username }}</span>
+        </div>
+        <Button
+          v-if="isAuthenticated"
+          label="Sign out"
+          severity="secondary"
+          outlined
+          @click="handleLogout"
+        />
+        <template v-else>
+          <Button class="hidden sm:inline-flex" label="Sign in" severity="secondary" text @click="goToLogin" />
+          <Button label="Register" severity="primary" @click="goToRegister" />
+        </template>
       </div>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+import { computed } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
 import Button from 'primevue/button';
+import { useAuthStore } from '@/stores/auth';
+
+const router = useRouter();
+const auth = useAuthStore();
+
+const isAuthenticated = computed(() => auth.isAuthenticated);
+const username = computed(() => auth.user?.username ?? '');
+
+const goToLogin = () => {
+  router.push({ name: 'login' });
+};
+
+const goToRegister = () => {
+  router.push({ name: 'register' });
+};
+
+const goToFeed = () => {
+  router.push({ name: 'feed' });
+};
+
+const handleLogout = () => {
+  auth.logout();
+  router.push({ name: 'home' });
+};
 </script>

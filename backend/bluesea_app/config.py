@@ -26,6 +26,8 @@ class Config:
     CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")
     UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", str(BASE_DIR / "uploads"))
     JSON_SORT_KEYS = False
+    PREFERRED_URL_SCHEME = os.getenv("PREFERRED_URL_SCHEME", "http")
+    SERVER_NAME = os.getenv("SERVER_NAME", None)
 
     ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@bluesea.local")
     ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "bluesea123")

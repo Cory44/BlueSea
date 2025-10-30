@@ -62,35 +62,52 @@ def register_error_handlers(app: Flask) -> None:
 
     @app.errorhandler(404)
     def handle_not_found(error):  # type: ignore[override]
-        return jsonify({"error": "Not Found", "message": str(error)}), 404
+        return jsonify({"error": "not_found", "message": str(error)}), 404
 
     @app.errorhandler(500)
     def handle_internal_error(error):  # type: ignore[override]
-        return jsonify({"error": "Internal Server Error", "message": str(error)}), 500
+        return jsonify({"error": "internal_error", "message": str(error)}), 500
 
 
 def register_jwt_handlers() -> None:
     """Configure JWT error handlers to return JSON payloads."""
 
+    from .models import User
+
+    @jwt.user_identity_loader
+    def user_identity_lookup(user: User):
+        return str(user.id) if isinstance(user, User) else str(user)
+
+    @jwt.user_lookup_loader
+    def user_lookup_callback(_jwt_header, jwt_data):
+        identity = jwt_data.get("sub")
+        if identity is None:
+            return None
+        return User.query.get(int(identity))
+
+    @jwt.user_lookup_error_loader
+    def user_lookup_error_callback(_jwt_header, _jwt_data):
+        return jsonify({"error": "user_not_found", "message": "The authenticated user could not be found."}), 404
+
     @jwt.expired_token_loader
     def expired_token_callback(jwt_header, jwt_data):  # pragma: no cover - thin wrapper
-        return jsonify({"error": "token_expired", "description": "The access token has expired."}), 401
+        return jsonify({"error": "token_expired", "message": "The access token has expired."}), 401
 
     @jwt.invalid_token_loader
     def invalid_token_callback(message):  # pragma: no cover - thin wrapper
-        return jsonify({"error": "token_invalid", "description": message}), 401
+        return jsonify({"error": "token_invalid", "message": message}), 401
 
     @jwt.unauthorized_loader
     def missing_token_callback(message):  # pragma: no cover - thin wrapper
-        return jsonify({"error": "authorization_required", "description": message}), 401
+        return jsonify({"error": "authorization_required", "message": message}), 401
 
     @jwt.needs_fresh_token_loader
     def needs_fresh_token_callback(jwt_header, jwt_data):  # pragma: no cover - thin wrapper
-        return jsonify({"error": "fresh_token_required", "description": "Fresh token required."}), 401
+        return jsonify({"error": "fresh_token_required", "message": "Fresh token required."}), 401
 
     @jwt.revoked_token_loader
     def revoked_token_callback(jwt_header, jwt_data):  # pragma: no cover - thin wrapper
-        return jsonify({"error": "token_revoked", "description": "The token has been revoked."}), 401
+        return jsonify({"error": "token_revoked", "message": "The token has been revoked."}), 401
 
 
 def register_routes(app: Flask) -> None:

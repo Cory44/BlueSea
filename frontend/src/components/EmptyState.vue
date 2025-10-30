@@ -1,9 +1,9 @@
 <template>
   <div
-    class="flex flex-col items-center gap-5 rounded-2xl border border-cyan-100/70 bg-white/80 p-10 text-center shadow-inner transition-colors dark:border-cyan-500/30 dark:bg-slate-900/80"
+    class="flex flex-col items-center gap-5 rounded-2xl border border-bluesea-100/70 bg-white/80 p-10 text-center shadow-inner transition-colors dark:border-bluesea-500/30 dark:bg-slate-900/80"
   >
     <span
-      class="flex h-16 w-16 items-center justify-center rounded-full bg-cyan-100 text-cyan-600 shadow-md shadow-cyan-100/50 dark:bg-cyan-500/20 dark:text-cyan-200"
+      class="flex h-16 w-16 items-center justify-center rounded-full bg-bluesea-100 text-bluesea-600 shadow-md shadow-bluesea-100/50 dark:bg-bluesea-500/20 dark:text-bluesea-200"
     >
       <i :class="['pi text-3xl', icon]"></i>
     </span>

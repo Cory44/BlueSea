@@ -4,7 +4,7 @@
       icon="pi pi-ship"
       title="You drifted off course"
       description="The page you're looking for has sailed beyond our horizon. Try heading back to the shoreline."
-      class="w-full bg-cyan-50/70"
+      class="w-full bg-bluesea-50/70"
     >
       <RouterLink :to="{ name: 'home' }">
         <Button label="Return home" icon="pi pi-home" />

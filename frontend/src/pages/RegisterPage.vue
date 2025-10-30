@@ -1,7 +1,7 @@
 <template>
-  <section class="mx-auto flex w-full max-w-md flex-col gap-6 rounded-3xl bg-white/85 p-10 shadow-xl shadow-cyan-100/40 backdrop-blur dark:bg-slate-900/70">
+  <section class="mx-auto flex w-full max-w-md flex-col gap-6 rounded-3xl bg-white/85 p-10 shadow-xl shadow-bluesea-100/40 backdrop-blur dark:bg-slate-900/70">
     <div class="text-center space-y-2">
-      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-cyan-500">Join the crew</p>
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-bluesea-500">Join the crew</p>
       <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Create your account</h1>
       <p class="text-slate-500 dark:text-slate-300">Join BlueSea and start sharing your voice.</p>
     </div>

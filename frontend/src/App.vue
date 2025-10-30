@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-screen bg-gradient-to-br from-sky-50 via-cyan-50 to-slate-100 text-slate-900 transition-colors dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100"
+    class="min-h-screen bg-gradient-to-br from-sky-50 via-bluesea-50 to-slate-100 text-slate-900 transition-colors dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100"
   >
     <TopBar />
     <Toast position="bottom-right" />

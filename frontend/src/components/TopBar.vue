@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 z-50 border-b border-cyan-200/70 bg-white/80 backdrop-blur shadow-sm shadow-cyan-100/40 transition-colors dark:border-cyan-500/30 dark:bg-slate-950/80"
+    class="sticky top-0 z-50 border-b border-bluesea-200/70 bg-white/80 backdrop-blur shadow-sm shadow-bluesea-100/40 transition-colors dark:border-bluesea-500/30 dark:bg-slate-950/80"
   >
     <div class="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
       <RouterLink to="/" class="flex items-center gap-3">
@@ -11,7 +11,7 @@
         <div v-if="isAuthenticated" class="hidden items-center gap-3 sm:flex">
           <Button label="Feed" severity="secondary" text @click="goToFeed" />
           <Button label="New post" icon="pi pi-plus" @click="goToNewPost" />
-          <span class="text-sm font-medium text-cyan-600 dark:text-cyan-200">@{{ username }}</span>
+          <span class="text-sm font-medium text-bluesea-600 dark:text-bluesea-200">@{{ username }}</span>
         </div>
         <Button
           v-if="isAuthenticated"

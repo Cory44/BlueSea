@@ -1,12 +1,59 @@
 <template>
-  <Card class="!bg-white/80 !text-slate-900 shadow-lg shadow-cyan-100/30 backdrop-blur dark:!bg-slate-900/80">
+  <Card class="!bg-white/80 !text-slate-900 shadow-lg shadow-bluesea-100/30 backdrop-blur dark:!bg-slate-900/80">
     <template #title>
       Share something new
     </template>
     <template #content>
       <form class="space-y-6" @submit.prevent="handleSubmit">
+        <div class="space-y-2">
+          <label for="title" class="block text-sm font-medium text-slate-700 dark:text-slate-200">
+            Title
+          </label>
+          <InputText
+            id="title"
+            v-model="title"
+            placeholder="Give your post a catchy title"
+            :disabled="submitting"
+            class="w-full !bg-white !text-slate-900"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <label for="description" class="block text-sm font-medium text-slate-700 dark:text-slate-200">
+            Description
+          </label>
+          <Textarea
+            id="description"
+            v-model="description"
+            rows="5"
+            placeholder="Tell the story behind this image"
+            auto-resize
+            :disabled="submitting"
+            class="w-full !bg-white !text-slate-900"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <label for="tags" class="block text-sm font-medium text-slate-700 dark:text-slate-200">
+            Tags
+          </label>
+          <Chips
+            id="tags"
+            v-model="tagChips"
+            separator="," 
+            :disabled="submitting"
+            placeholder="Add tags and press enter"
+            class="w-full !bg-white !text-slate-900"
+            :pt="{ 
+              input: { class: '!bg-white !text-slate-900' },
+              container: { class: '!bg-white !text-slate-900' }
+            }"
+          />
+          <p class="text-xs text-slate-500">Use tags to help others discover your post.</p>
+        </div>
+
         <div class="space-y-3">
-          <label for="image" class="text-sm font-medium text-slate-700 dark:text-slate-200">
+          <label for="image" class="block text-sm font-medium text-slate-700 dark:text-slate-200">
             Image
           </label>
           <FileUpload
@@ -27,7 +74,7 @@
             icon="pi pi-image"
             title="No image selected"
             description="Choose a marine moment to upload. We'll preview it here so you can fine-tune the details before sharing."
-            class="w-full border-dashed border-cyan-200 bg-cyan-50/70 py-8 dark:border-cyan-500/40 dark:bg-slate-900/60"
+            class="w-full border-dashed border-bluesea-200 bg-bluesea-50/70 py-8 dark:border-bluesea-500/40 dark:bg-slate-900/60"
           />
 
           <div v-if="previewUrl" class="relative mt-4 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
@@ -42,53 +89,6 @@
               @click="removeImage"
             />
           </div>
-        </div>
-
-        <div class="space-y-2">
-          <label for="caption" class="text-sm font-medium text-slate-700 dark:text-slate-200">
-            Caption
-          </label>
-          <InputText
-            id="caption"
-            v-model="caption"
-            placeholder="Give your post a catchy caption"
-            :disabled="submitting"
-            class="!bg-white !text-slate-900"
-          />
-        </div>
-
-        <div class="space-y-2">
-          <label for="description" class="text-sm font-medium text-slate-700 dark:text-slate-200">
-            Description
-          </label>
-          <Textarea
-            id="description"
-            v-model="description"
-            rows="5"
-            placeholder="Tell the story behind this image"
-            auto-resize
-            :disabled="submitting"
-            class="!bg-white !text-slate-900"
-          />
-        </div>
-
-        <div class="space-y-2">
-          <label for="tags" class="text-sm font-medium text-slate-700 dark:text-slate-200">
-            Tags
-          </label>
-          <Chips
-            id="tags"
-            v-model="tagChips"
-            separator="," 
-            :disabled="submitting"
-            placeholder="Add tags and press enter"
-            class="!bg-white !text-slate-900"
-            :pt="{ 
-              input: { class: '!bg-white !text-slate-900' },
-              container: { class: '!bg-white !text-slate-900' }
-            }"
-          />
-          <p class="text-xs text-slate-500">Use tags to help others discover your post.</p>
         </div>
 
         <div class="flex items-center justify-end gap-3">
@@ -120,7 +120,7 @@ interface FileUploadSelectEvent {
   files: File[];
 }
 
-const caption = ref('');
+const title = ref('');
 const description = ref('');
 const tagChips = ref<string[]>([]);
 const submitting = ref(false);
@@ -131,7 +131,7 @@ const toast = useToast();
 const fileUploadRef = ref<{ clear: () => void } | null>(null);
 
 const isSubmitDisabled = computed(() => {
-  return submitting.value || !caption.value.trim() || !description.value.trim() || !selectedFile.value;
+  return submitting.value || !title.value.trim() || !description.value.trim() || !selectedFile.value;
 });
 
 const revokePreview = () => {
@@ -200,7 +200,7 @@ const removeImage = () => {
 };
 
 const resetForm = () => {
-  caption.value = '';
+  title.value = '';
   description.value = '';
   tagChips.value = [];
   removeImage();
@@ -223,7 +223,7 @@ const extractErrorMessage = (error: unknown) => {
 
 const handleSubmit = async () => {
   if (isSubmitDisabled.value) {
-    toast.add({ severity: 'warn', summary: 'Missing information', detail: 'Add an image, caption, and description.', life: 3000 });
+    toast.add({ severity: 'warn', summary: 'Missing information', detail: 'Add a title, description, and image.', life: 3000 });
     return;
   }
 
@@ -231,7 +231,7 @@ const handleSubmit = async () => {
 
   try {
     const formData = new FormData();
-    formData.append('title', caption.value.trim());
+    formData.append('title', title.value.trim());
     formData.append('body', description.value.trim());
     formData.append('source', 'community');
     if (selectedFile.value) {

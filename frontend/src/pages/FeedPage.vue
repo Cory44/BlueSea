@@ -2,7 +2,7 @@
   <section class="space-y-10">
     <header class="flex flex-col gap-4 rounded-3xl bg-white/70 p-6 shadow-sm backdrop-blur dark:bg-slate-900/60 sm:flex-row sm:items-center sm:justify-between">
       <div class="space-y-1">
-        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-500">Tide tracker</p>
+        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-bluesea-500">Tide tracker</p>
         <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-50">Your feed</h1>
         <p class="text-slate-500 dark:text-slate-300">Catch up with the latest posts across your communities.</p>
       </div>
@@ -27,7 +27,7 @@
           icon="pi pi-compass"
           title="The tide is calm"
           description="We couldn't find any posts for this source yet. Try refreshing the feed or exploring another current."
-          class="bg-cyan-50/60"
+          class="bg-bluesea-50/60"
         >
           <Button label="Refresh" text severity="secondary" @click="refresh" />
         </EmptyState>

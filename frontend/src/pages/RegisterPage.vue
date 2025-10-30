@@ -1,8 +1,9 @@
 <template>
-  <section class="mx-auto flex w-full max-w-md flex-col gap-6">
+  <section class="mx-auto flex w-full max-w-md flex-col gap-6 rounded-3xl bg-white/85 p-10 shadow-xl shadow-cyan-100/40 backdrop-blur dark:bg-slate-900/70">
     <div class="text-center space-y-2">
-      <h1 class="text-3xl font-semibold">Create your account</h1>
-      <p class="text-slate-500">Join BlueSea and start sharing your voice.</p>
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-cyan-500">Join the crew</p>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Create your account</h1>
+      <p class="text-slate-500 dark:text-slate-300">Join BlueSea and start sharing your voice.</p>
     </div>
 
     <Message v-if="formErrors.general" severity="error" :closable="false">{{ formErrors.general }}</Message>
@@ -71,9 +72,11 @@ import Button from 'primevue/button';
 import Message from 'primevue/message';
 import InlineMessage from 'primevue/inlinemessage';
 import { useAuthStore } from '@/stores/auth';
+import { useToast } from 'primevue/usetoast';
 
 const router = useRouter();
 const auth = useAuthStore();
+const toast = useToast();
 
 const username = ref('');
 const password = ref('');
@@ -120,9 +123,11 @@ const handleSubmit = async () => {
 
   try {
     await auth.register({ username: username.value, password: password.value });
+    toast.add({ severity: 'success', summary: 'Welcome aboard', detail: 'Your account has been created.', life: 3000 });
     router.push({ name: 'feed' });
   } catch (error) {
     formErrors.general = (error as Error).message;
+    toast.add({ severity: 'error', summary: 'Sign-up failed', detail: formErrors.general, life: 5000 });
   }
 };
 </script>

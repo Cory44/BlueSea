@@ -1,5 +1,5 @@
 <template>
-  <section class="space-y-6">
+  <section class="space-y-6 rounded-3xl bg-white/80 p-6 shadow-sm backdrop-blur dark:bg-slate-900/70">
     <Button label="Back to feed" icon="pi pi-arrow-left" text @click="goBack" />
 
     <Message v-if="error" severity="error" :closable="false">
@@ -19,6 +19,7 @@
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { isAxiosError } from 'axios';
+import { useToast } from 'primevue/usetoast';
 import Button from 'primevue/button';
 import Message from 'primevue/message';
 import ProgressSpinner from 'primevue/progressspinner';
@@ -27,6 +28,7 @@ import api from '@/services/api';
 
 const route = useRoute();
 const router = useRouter();
+const toast = useToast();
 
 const post = ref<PostSummary | null>(null);
 const loading = ref(false);
@@ -62,6 +64,7 @@ const fetchPost = async () => {
     } else {
       error.value = 'Unable to load this post.';
     }
+    toast.add({ severity: 'error', summary: 'Post unavailable', detail: error.value, life: 5000 });
   } finally {
     loading.value = false;
   }

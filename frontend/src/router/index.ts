@@ -5,6 +5,7 @@ import RegisterPage from '@/pages/RegisterPage.vue';
 import FeedPage from '@/pages/FeedPage.vue';
 import PostDetailPage from '@/pages/PostDetailPage.vue';
 import NewPostPage from '@/pages/NewPostPage.vue';
+import NotFoundPage from '@/pages/NotFoundPage.vue';
 import { pinia } from '@/stores';
 import { useAuthStore } from '@/stores/auth';
 
@@ -45,6 +46,11 @@ const router = createRouter({
       name: 'post',
       component: PostDetailPage,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFoundPage
     }
   ],
   scrollBehavior() {

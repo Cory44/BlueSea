@@ -1,11 +1,11 @@
 <template>
-  <Card class="!bg-white !text-slate-900">
+  <Card class="!bg-white/80 !text-slate-900 shadow-lg shadow-cyan-100/30 backdrop-blur dark:!bg-slate-900/80">
     <template #title>
       Share something new
     </template>
     <template #content>
       <form class="space-y-6" @submit.prevent="handleSubmit">
-        <div class="space-y-2">
+        <div class="space-y-3">
           <label for="image" class="text-sm font-medium text-slate-700 dark:text-slate-200">
             Image
           </label>
@@ -21,6 +21,14 @@
             @clear="onClearFile"
           />
           <p class="text-xs text-slate-500">PNG, JPG or GIF up to 5MB.</p>
+
+          <EmptyState
+            v-if="!selectedFile"
+            icon="pi pi-image"
+            title="No image selected"
+            description="Choose a marine moment to upload. We'll preview it here so you can fine-tune the details before sharing."
+            class="w-full border-dashed border-cyan-200 bg-cyan-50/70 py-8 dark:border-cyan-500/40 dark:bg-slate-900/60"
+          />
 
           <div v-if="previewUrl" class="relative mt-4 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
             <Image :src="previewUrl" alt="Selected image preview" preview image-class="max-h-[400px] w-full object-cover" />
@@ -104,6 +112,7 @@ import Image from 'primevue/image';
 import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 import api from '@/services/api';
+import EmptyState from '@/components/EmptyState.vue';
 
 const emit = defineEmits<{ (e: 'success'): void }>();
 
@@ -119,7 +128,7 @@ const selectedFile = ref<File | null>(null);
 const previewUrl = ref<string | null>(null);
 const maxFileSize = 5 * 1024 * 1024;
 const toast = useToast();
-const fileUploadRef = ref<InstanceType<typeof FileUpload> | null>(null);
+const fileUploadRef = ref<{ clear: () => void } | null>(null);
 
 const isSubmitDisabled = computed(() => {
   return submitting.value || !caption.value.trim() || !description.value.trim() || !selectedFile.value;

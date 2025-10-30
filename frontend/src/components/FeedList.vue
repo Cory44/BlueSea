@@ -4,7 +4,10 @@
       <PostCard v-for="post in posts" :key="post.id" :post="post" />
     </TransitionGroup>
 
-    <div v-if="!posts.length && !loading" class="rounded-xl border border-dashed border-slate-300 bg-white p-12 text-center text-slate-500 dark:border-slate-700 dark:bg-slate-900">
+    <div
+      v-if="!posts.length && !loading"
+      class="rounded-3xl border border-dashed border-cyan-200 bg-cyan-50/50 p-8 text-center text-slate-500 backdrop-blur dark:border-cyan-500/30 dark:bg-slate-900/60"
+    >
       <slot name="empty">No posts to display yet.</slot>
     </div>
 

@@ -8,6 +8,7 @@
       <div class="flex items-center gap-3">
         <div v-if="isAuthenticated" class="hidden items-center gap-3 sm:flex">
           <Button label="Feed" severity="secondary" text @click="goToFeed" />
+          <Button label="New post" icon="pi pi-plus" @click="goToNewPost" />
           <span class="text-sm text-slate-500 dark:text-slate-300">@{{ username }}</span>
         </div>
         <Button
@@ -48,6 +49,10 @@ const goToRegister = () => {
 
 const goToFeed = () => {
   router.push({ name: 'feed' });
+};
+
+const goToNewPost = () => {
+  router.push({ name: 'new-post' });
 };
 
 const handleLogout = () => {

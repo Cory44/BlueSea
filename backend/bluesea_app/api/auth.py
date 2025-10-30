@@ -18,7 +18,7 @@ from ..models import User
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/auth")
 
-_USERNAME_RE = re.compile(r"^[A-Za-z0-9_.-]{3,50}$")
+_USERNAME_RE = re.compile(r"^[A-Za-z0-9_.@-]{3,50}$")
 _PASSWORD_MIN_LENGTH = 8
 
 

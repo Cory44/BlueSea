@@ -76,14 +76,14 @@ def register_jwt_handlers() -> None:
 
     @jwt.user_identity_loader
     def user_identity_lookup(user: User):
-        return user.id if isinstance(user, User) else user
+        return str(user.id) if isinstance(user, User) else str(user)
 
     @jwt.user_lookup_loader
     def user_lookup_callback(_jwt_header, jwt_data):
         identity = jwt_data.get("sub")
         if identity is None:
             return None
-        return User.query.get(identity)
+        return User.query.get(int(identity))
 
     @jwt.user_lookup_error_loader
     def user_lookup_error_callback(_jwt_header, _jwt_data):

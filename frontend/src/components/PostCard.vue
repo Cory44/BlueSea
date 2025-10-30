@@ -23,7 +23,7 @@
         v-if="post.image_url"
         :src="post.image_url"
         :alt="`Image for post ${post.title}`"
-        class="max-h-96 w-full rounded-xl object-cover"
+        class="max-h-[500px] w-full rounded-xl object-contain"
       />
 
       <footer v-if="post.tags.length > 1" class="flex flex-wrap gap-2">

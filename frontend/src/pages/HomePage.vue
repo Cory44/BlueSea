@@ -16,8 +16,31 @@
       </div>
 
       <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
-        <Button label="Sign in" severity="secondary" size="large" outlined class="min-w-[140px]" />
-        <Button label="Register" severity="primary" size="large" class="min-w-[140px]" />
+        <Button
+          v-if="!isAuthenticated"
+          label="Sign in"
+          severity="secondary"
+          size="large"
+          outlined
+          class="min-w-[140px]"
+          @click="goToLogin"
+        />
+        <Button
+          v-if="!isAuthenticated"
+          label="Register"
+          severity="primary"
+          size="large"
+          class="min-w-[140px]"
+          @click="goToRegister"
+        />
+        <Button
+          v-else
+          label="Go to feed"
+          severity="primary"
+          size="large"
+          class="min-w-[140px]"
+          @click="goToFeed"
+        />
       </div>
 
       <div class="pt-8">
@@ -54,5 +77,25 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 import Button from 'primevue/button';
+import { useAuthStore } from '@/stores/auth';
+
+const router = useRouter();
+const auth = useAuthStore();
+
+const isAuthenticated = computed(() => auth.isAuthenticated);
+
+const goToLogin = () => {
+  router.push({ name: 'login' });
+};
+
+const goToRegister = () => {
+  router.push({ name: 'register' });
+};
+
+const goToFeed = () => {
+  router.push({ name: 'feed' });
+};
 </script>

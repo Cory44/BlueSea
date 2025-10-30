@@ -44,7 +44,13 @@ def create_app(config_object: Optional[Union[str, Mapping[str, Any]]] = None) ->
     cors_origins = app.config.get("CORS_ORIGINS", ["*"])
     if isinstance(cors_origins, str):
         cors_origins = [cors_origins]
-    resources = {r"/api/*": {"origins": cors_origins if cors_origins != ["*"] else "*"}}
+    resources = {
+        r"/api/*": {
+            "origins": cors_origins if cors_origins != ["*"] else "*",
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"],
+        }
+    }
     CORS(app, resources=resources, supports_credentials=True)
 
     register_error_handlers(app)
